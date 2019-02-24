@@ -6,9 +6,9 @@ namespace Sorting
     {
         static void Main(string[] args)
         {
-            var mas = Common.Generate(30);
+            var mas = Common.Generate(10);
             Common.Print(mas);
-            InsertionSort.Sort(mas);
+            PyramidSort.Sort(mas);
             Common.Print(mas);
         }
     }
@@ -75,6 +75,64 @@ namespace Sorting
             }
         }
     }
+
+    public class PyramidSort
+    {
+        public static void Sort(int[] mas)
+        {
+            CreateHeap(mas);
+            for(int i = mas.Length - 1; i >= 0; i-- )
+            {
+                mas[i] = RemoveRoot(mas, i);
+            }
+        }
+        private static void CreateHeap(int[] mas)
+        {
+            for (int i = 0; i < mas.Length; i++)
+            {
+                var index = i;
+                while(index != 0)
+                {
+                    var parent = (index - 1) / 2;
+                    if (mas[index] <= mas[parent]) break;
+
+                    Common.Swap(mas, index, parent);
+
+                    index = parent;
+                }
+            }
+        }
+        private static int RemoveRoot(int[] mas, int count)
+        {
+            var result = mas[0];
+
+            mas[0] = mas[count];
+            var index = 0;
+
+            while (true)
+            {
+                var child1 = (index * 2) + 1;
+                var child2 = (index *2) + 2;
+
+                if (child1 > count) { child1 = index;}
+                if (child2 > count) { child2 = index;}
+
+                if (mas[index] >= mas[child1] && mas[index] >= mas[child2])
+                    break;
+
+                int swap_child = 0;
+                if (mas[child1] > mas[child2])
+                    swap_child = child1;
+                else
+                    swap_child = child2;
+                
+                Common.Swap(mas, index, swap_child);
+                index = swap_child;
+            }
+
+            return result;
+        }
+    }    
     static class Common
     {
         public static void Swap(int[] mas, int i, int j)        
