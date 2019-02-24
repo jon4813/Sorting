@@ -8,7 +8,7 @@ namespace Sorting
         {
             var mas = Common.Generate(10);
             Common.Print(mas);
-            PyramidSort.Sort(mas);
+            MergeSort.Sort(mas);
             Common.Print(mas);
         }
     }
@@ -133,6 +133,60 @@ namespace Sorting
             return result;
         }
     }    
+
+    public class MergeSort
+    {
+        public static void Sort(int[] mas)
+        {
+            Sort(mas, new int[mas.Length], 0, mas.Length - 1);
+        }
+
+        private static void Sort(int[] mas, int[] tmp, int start, int end)
+        {
+            if (start == end)
+                return;
+
+            int middle = (start + end) / 2;
+
+            Sort(mas, tmp, start, middle);
+            Sort(mas, tmp, middle + 1, end);
+
+            var leftIndex = start;
+            var rightIndex = middle + 1;
+            var tmpIndex = leftIndex;
+            if (leftIndex <= middle && rightIndex <= end)
+            {
+                if (mas[leftIndex] <= mas[rightIndex])
+                {
+                    tmp[tmpIndex] = mas[leftIndex];
+                    leftIndex++;
+                }else
+                {
+                    tmp[tmpIndex] = mas[rightIndex];
+                    rightIndex++;
+                }
+
+                tmpIndex++;
+            }
+
+            for (int i = leftIndex; i <= middle; i++)
+            {
+                tmp[tmpIndex] = mas[i];
+                tmpIndex++;
+            }
+
+            for (int i = rightIndex; i <= end; i++)
+            {
+                tmp[tmpIndex] = mas[i];
+                tmpIndex++;
+            }
+
+            for (int i = start; i <= end; i++)
+            {
+                mas[i] = tmp[i];
+            }
+        }
+    }
     static class Common
     {
         public static void Swap(int[] mas, int i, int j)        
