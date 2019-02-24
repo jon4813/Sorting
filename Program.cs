@@ -8,7 +8,7 @@ namespace Sorting
         {
             var mas = Common.Generate(30);
             Common.Print(mas);
-            QSort.Sort(mas);
+            InsertionSort.Sort(mas);
             Common.Print(mas);
         }
     }
@@ -58,6 +58,23 @@ namespace Sorting
         }
     }
 
+    class InsertionSort
+    {
+        public static void Sort(int[] mas)
+        {
+            for(int i = 1; i < mas.Length; i++)
+            {                                
+                for (int j = i; j > 0; j--)
+                {
+                    if (mas[j-1] > mas[j])
+                    {
+                        Common.Swap(mas,j,j-1);
+                    }
+                    
+                }                
+            }
+        }
+    }
     static class Common
     {
         public static void Swap(int[] mas, int i, int j)        
